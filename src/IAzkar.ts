@@ -2,6 +2,7 @@ export interface IAzkar{
     id:number
     arabicText:string
     translatedText:string
-    languageArabicTranslatedText:Text
+    languageArabicTranslatedText:string
     repeat:number
+    audio:string
 }
