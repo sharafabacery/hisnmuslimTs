@@ -4,6 +4,7 @@ import { IBaseData } from "./IBaseData";
 import { AzkarBaseData } from "./AzkarBaseData";
 import { IAzkarBaseData } from "./IAzkarBaseData";
 import { Azkar } from "./Azkar";
+import { Connectdb } from './Connectdb';
 const azkarJson=async(languages:{[id:string]:IAzkarBaseData[]})=>{
     let jsonData=JSON.stringify(languages)
     await fs.writeFileSync('output.json',jsonData)
@@ -28,7 +29,11 @@ const azkarMainBase=async(res:IBaseData[])=>{
     }
     return languages
 }
-
+const dbconn=()=>{
+    let obj=new Connectdb("db\\hisn_elmoslem.db")
+    obj.Connect()
+    obj.RetriveData()
+}
 const main=async()=>{
     let obj=new BaseData()
     
@@ -39,5 +44,5 @@ const main=async()=>{
     
 }
 
-main()
-
+//main()
+dbconn()
