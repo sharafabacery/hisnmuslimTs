@@ -8,6 +8,7 @@ import { Connectdb } from './Connectdb';
 import { AzkarDB } from './AzkarDB';
 import { json } from 'stream/consumers';
 import { IAzkarDB } from './interface/IAzkarDB';
+import { CommentaryDB } from './CommentaryDB';
 const azkarJson=async(languages:{[id:string]:IAzkarBaseData[]},outputFile:string)=>{
     let jsonData=JSON.stringify(languages)
     await fs.writeFileSync(outputFile,jsonData)
@@ -40,13 +41,27 @@ const azkarMainBase=async(res:IBaseData[])=>{
 const dbconn=async()=>{
     let obj=new Connectdb("db\\hisn_elmoslem.db")
     obj.Connect()
-    let queryResult=obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
-FROM titles t
-INNER JOIN contents c
-ON t.id=c.titleId
-order by t.id`)
-        let obj2=new AzkarDB()
-        await azkarJsonDB(obj2.processORM(queryResult),'outputDB.json')
+    let queryAzkarDB=obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
+                                        FROM titles t
+                                        INNER JOIN contents c
+                                        ON t.id=c.titleId
+                                        order by t.id`);
+                                        
+    
+    let obj3=new AzkarDB()
+    let resultAzkarDB=obj3.processORM(queryAzkarDB)
+                                        
+    let obj2=new Connectdb('db\\commentary.db')
+    obj2.Connect();
+    let queryCommentary=obj2.RetriveData(`SELECT *
+                                            FROM commentary
+                                            ORDER BY contentId`);
+    
+    let obj4=new CommentaryDB()
+    let resultCommentary=obj4.processORM(queryCommentary);
+    
+    //console.log(resultCommentary)
+    //await azkarJsonDB(resultAzkarDB,'outputDB.json')
        //console.log()
 
 }
