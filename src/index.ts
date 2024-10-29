@@ -9,6 +9,7 @@ import { AzkarDB } from './AzkarDB';
 import { json } from 'stream/consumers';
 import { IAzkarDB } from './interface/IAzkarDB';
 import { CommentaryDB } from './CommentaryDB';
+import { MergeAzkarDB } from './MergeAzkarDB';
 const azkarJson=async(languages:{[id:string]:IAzkarBaseData[]},outputFile:string)=>{
     let jsonData=JSON.stringify(languages)
     await fs.writeFileSync(outputFile,jsonData)
@@ -60,9 +61,11 @@ const dbconn=async()=>{
     let obj4=new CommentaryDB()
     let resultCommentary=obj4.processORM(queryCommentary);
     
+    let mergeAzkarDB=new MergeAzkarDB().mergeAzkar(resultAzkarDB,resultCommentary)
+
     //console.log(resultCommentary)
-    //await azkarJsonDB(resultAzkarDB,'outputDB.json')
-       //console.log()
+    await azkarJsonDB(mergeAzkarDB,'outputDB.json')
+    //console.log()
 
 }
 const main=async()=>{
