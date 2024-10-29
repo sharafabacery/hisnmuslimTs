@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IBaseData } from "./IBaseData";
+import { IBaseData } from "./interface/IBaseData";
 
 export class BaseData {
   async fetchBaseData(url: string) {

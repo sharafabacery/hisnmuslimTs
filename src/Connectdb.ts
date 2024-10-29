@@ -1,4 +1,3 @@
-import path from 'node:path';
 import {DatabaseSync} from 'node:sqlite'
 export class Connectdb{
     dbConnectionString:string;
@@ -10,8 +9,9 @@ export class Connectdb{
     Connect(){
         this.database=new DatabaseSync(this.dbConnectionString);
     }
-    RetriveData() {
-        const query = this.database.prepare('SELECT id FROM titles ');  
-        console.log(query.all())
+    RetriveData(sqlString:string) {
+        const query = this.database.prepare(sqlString);
+        //console.log(query.all())  
+        return query.all()
     }
 }

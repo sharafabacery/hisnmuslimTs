@@ -1,14 +1,22 @@
 import fs from 'fs'
 import { BaseData } from "./BaseData";
-import { IBaseData } from "./IBaseData";
+import { IBaseData } from "./interface/IBaseData";
 import { AzkarBaseData } from "./AzkarBaseData";
-import { IAzkarBaseData } from "./IAzkarBaseData";
+import { IAzkarBaseData } from "./interface/IAzkarBaseData";
 import { Azkar } from "./Azkar";
 import { Connectdb } from './Connectdb';
-const azkarJson=async(languages:{[id:string]:IAzkarBaseData[]})=>{
+import { AzkarDB } from './AzkarDB';
+import { json } from 'stream/consumers';
+import { IAzkarDB } from './interface/IAzkarDB';
+const azkarJson=async(languages:{[id:string]:IAzkarBaseData[]},outputFile:string)=>{
     let jsonData=JSON.stringify(languages)
-    await fs.writeFileSync('output.json',jsonData)
+    await fs.writeFileSync(outputFile,jsonData)
 }
+const azkarJsonDB=async(languages:IAzkarDB[],outputFile:string)=>{
+    let jsonData=JSON.stringify(languages)
+    await fs.writeFileSync(outputFile,jsonData)
+}
+
 const azkar=async(languages:{[id:string]:IAzkarBaseData[]})=>{
     let obj3=new Azkar()
     const languageKeys=Object.keys(languages);
@@ -29,10 +37,18 @@ const azkarMainBase=async(res:IBaseData[])=>{
     }
     return languages
 }
-const dbconn=()=>{
+const dbconn=async()=>{
     let obj=new Connectdb("db\\hisn_elmoslem.db")
     obj.Connect()
-    obj.RetriveData()
+    let queryResult=obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
+FROM titles t
+INNER JOIN contents c
+ON t.id=c.titleId
+order by t.id`)
+        let obj2=new AzkarDB()
+        await azkarJsonDB(obj2.processORM(queryResult),'outputDB.json')
+       //console.log()
+
 }
 const main=async()=>{
     let obj=new BaseData()
@@ -40,7 +56,7 @@ const main=async()=>{
     let res:IBaseData[]=await obj.fetchBaseData("https://hisnmuslim.com/api/husn.json")
     let languages:{[id:string]:IAzkarBaseData[]}= await azkarMainBase(res)
     let languagesComplete=await azkar(languages)
-    await azkarJson(languagesComplete)
+    await azkarJson(languagesComplete,'output.json')
     
 }
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { IAzkarBaseData } from "./IAzkarBaseData";
-import { IAzkar } from "./IAzkar";
+import { IAzkarBaseData } from "./interface/IAzkarBaseData";
+import { IAzkar } from "./interface/IAzkar";
 import { AzkarBaseData } from "./AzkarBaseData";
 
 export class Azkar{

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IAzkarBaseData } from "./IAzkarBaseData";
+import { IAzkarBaseData } from "./interface/IAzkarBaseData";
 
 export class AzkarBaseData{
     async fetchAzkarBaseData(url:string,language:string){
