@@ -10,6 +10,7 @@ import { json } from 'stream/consumers';
 import { IAzkarDB } from './interface/IAzkarDB';
 import { CommentaryDB } from './CommentaryDB';
 import { MergeAzkarDB } from './MergeAzkarDB';
+import { MatchAzkarDB } from './MatchAzkarDB';
 const azkarJson=async(languages:{[id:string]:IAzkarBaseData[]},outputFile:string)=>{
     let jsonData=JSON.stringify(languages)
     await fs.writeFileSync(outputFile,jsonData)
@@ -77,6 +78,32 @@ const main=async()=>{
     await azkarJson(languagesComplete,'output.json')
     
 }
+const getArabicAzkarApi=async()=>{
+    let obj=new BaseData()
+    let res:IBaseData[]=await obj.fetchBaseData("https://hisnmuslim.com/api/husn.json")
+    let languages:{[id:string]:IAzkarBaseData[]}= await azkarMainBase(res)
+    return languages['العربية'];
+}
+const getHisenhuslismTitles=()=>{
+    let obj=new Connectdb('db\\hisn_elmoslem.db')
+    obj.Connect();
+    let queryTitles=obj.RetriveData(`SELECT *
+                                            FROM titles`);
+
+    let titles=new AzkarDB().processTitlesORM(queryTitles);
+    return titles
+}
+const updateMatchedAudioTitle=async()=>{
+    let api=await getArabicAzkarApi()
+    let matches=new MatchAzkarDB().matchAzkarBase(api)
+    let obj=new Connectdb('db\\hisn_elmoslem.db')
+    let res=obj.updatePrepareDB(`UPDATE titles
+                                    SET audio = " ";
+                                    `,matches)
+    //console.log(matches.length)
+    console.log(res)
+}
 
 //main()
-dbconn()
+//dbconn()
+updateMatchedAudioTitle()

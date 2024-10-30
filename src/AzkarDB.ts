@@ -32,4 +32,17 @@ export class AzkarDB{
         return returnAzkarDB;
 
     }
+    processTitlesORM(titles:[]){
+        let returnAzkarDB:IAzkarDB[]=[]
+        titles.forEach(title=>{
+            returnAzkarDB.push({
+                id: title['id'],
+                name:title["name"],
+                search:title["search"],
+                audio:title["audio"],
+                azkarDetails: []
+            })
+        })
+        return returnAzkarDB
+    }
 }

@@ -14,4 +14,11 @@ export class Connectdb{
         //console.log(query.all())  
         return query.all()
     }
+    updatePrepareDB(sqlString:string,matches:any[]){
+        const query=this.database.prepare(sqlString)
+        console.log(matches)
+        query.run();
+       // let result=query.run(...matches)
+        //console.log(result)
+    }
 }
