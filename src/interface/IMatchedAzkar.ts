@@ -1,4 +1,5 @@
 export interface IMatchedAzkar{
-    id:number
     audio?:string
+    order:number
+    
 }

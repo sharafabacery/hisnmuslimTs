@@ -16,9 +16,13 @@ export class Connectdb{
     }
     updatePrepareDB(sqlString:string,matches:any[]){
         const query=this.database.prepare(sqlString)
-        console.log(matches)
-        query.run();
-       // let result=query.run(...matches)
-        //console.log(result)
+        //console.log(matches)
+        //query.run();
+        matches.forEach(match=>{
+            //console.log(match)
+            let result=query.run(match['audio'],match['order'])
+            //console.log(result)
+        })
+        
     }
 }

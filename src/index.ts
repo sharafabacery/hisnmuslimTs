@@ -97,11 +97,12 @@ const updateMatchedAudioTitle=async()=>{
     let api=await getArabicAzkarApi()
     let matches=new MatchAzkarDB().matchAzkarBase(api)
     let obj=new Connectdb('db\\hisn_elmoslem.db')
-    let res=obj.updatePrepareDB(`UPDATE titles
-                                    SET audio = " ";
-                                    `,matches)
+    obj.Connect()
+    let res=obj.updatePrepareDB(`UPDATE titles 
+SET audio = ?
+WHERE [order] = ? `,matches)
     //console.log(matches.length)
-    console.log(res)
+    //console.log(res)
 }
 
 //main()

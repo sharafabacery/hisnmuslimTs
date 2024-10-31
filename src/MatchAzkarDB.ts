@@ -8,21 +8,21 @@ export class MatchAzkarDB{
         arabicAzkar.forEach(zekr=>{
             if(zekr.id<27){
                 matches.push({
-                    id:zekr.id+2,
+                    order:zekr.id+2,
                     audio:zekr.audioUrl
                 })
             }else if(zekr.id==27){
                 matches.push({
-                    id:zekr.id+2,
+                    order:zekr.id+2,
                     audio:zekr.audioUrl
                 })
                 matches.push({
-                    id:zekr.id+3,
+                    order:zekr.id+3,
                     audio:zekr.audioUrl
                 })
             }else{
                 matches.push({
-                    id:zekr.id+3,
+                    order:zekr.id+3,
                     audio:zekr.audioUrl
                 })
             }
