@@ -40,7 +40,7 @@ const azkarMainBase=async(res:IBaseData[])=>{
     }
     return languages
 }
-const dbconn=async()=>{
+const azkarDBORM=()=>{
     let obj=new Connectdb("db\\hisn_elmoslem.db")
     obj.Connect()
     let queryAzkarDB=obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
@@ -51,8 +51,11 @@ const dbconn=async()=>{
                                         
     
     let obj3=new AzkarDB()
-    let resultAzkarDB=obj3.processORM(queryAzkarDB)
-                                        
+    return obj3.processORM(queryAzkarDB)
+}
+const dbconn=async()=>{
+    let resultAzkarDB=azkarDBORM()
+                                      
     let obj2=new Connectdb('db\\commentary.db')
     obj2.Connect();
     let queryCommentary=obj2.RetriveData(`SELECT *
@@ -82,7 +85,7 @@ const getArabicAzkarApi=async()=>{
     let obj=new BaseData()
     let res:IBaseData[]=await obj.fetchBaseData("https://hisnmuslim.com/api/husn.json")
     let languages:{[id:string]:IAzkarBaseData[]}= await azkarMainBase(res)
-    return languages['العربية'];
+    return languages;
 }
 const getHisenhuslismTitles=()=>{
     let obj=new Connectdb('db\\hisn_elmoslem.db')
@@ -95,7 +98,7 @@ const getHisenhuslismTitles=()=>{
 }
 const updateMatchedAudioTitle=async()=>{
     let api=await getArabicAzkarApi()
-    let matches=new MatchAzkarDB().matchAzkarBase(api)
+    let matches=new MatchAzkarDB().matchAzkarBase(api['العربية'])
     let obj=new Connectdb('db\\hisn_elmoslem.db')
     obj.Connect()
     let res=obj.updatePrepareDB(`UPDATE titles 
@@ -104,7 +107,21 @@ WHERE [order] = ? `,matches)
     //console.log(matches.length)
     //console.log(res)
 }
+const updateMatchedAudioContent=async()=>{
+    let resultAzkarDB=azkarDBORM()
+    let api=await getArabicAzkarApi()
+    let allAzkar=await azkar(api)
+    let matches=new MatchAzkarDB().matchAzkarContents(allAzkar['العربية'],resultAzkarDB)
+    let obj=new Connectdb('db\\hisn_elmoslem.db')
+    obj.Connect()
+    let res=obj.updatePrepareDB(`UPDATE contents 
+SET audio = ?
+WHERE id = ? `,matches)
+    //console.log(matches.length)
+    //console.log(res)
+}
 
 //main()
 //dbconn()
-updateMatchedAudioTitle()
+//updateMatchedAudioTitle()
+updateMatchedAudioContent()

@@ -19,7 +19,7 @@ export class Connectdb{
         //console.log(matches)
         //query.run();
         matches.forEach(match=>{
-            //console.log(match)
+            console.log(match)
             let result=query.run(match['audio'],match['order'])
             //console.log(result)
         })
