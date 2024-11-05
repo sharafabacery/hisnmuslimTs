@@ -4,7 +4,7 @@ import { IAzkarOffset } from "./interface/IAzkarOffset";
 import { IMatchedAzkar } from "./interface/IMatchedAzkar";
 import { azkarOffset } from "./AzkarOffsetData";
 export class MatchAzkarDB {
-  titlesMap1 = [16, 28, 50, 59, 88, 95, 96, 105, 118, 124];
+  titlesMap1 = [15,16, 28, 50, 59, 88, 95, 96, 105, 118, 124];
   azkar: IAzkarOffset[] = azkarOffset;
   matchAzkarBase(arabicAzkar: IAzkarBaseData[]) {
     let matches: IMatchedAzkar[] = [];
