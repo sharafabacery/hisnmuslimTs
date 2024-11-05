@@ -1,5 +1,5 @@
-export interface IBaseData{
-    id:number
-    language:string
-    languageUrl:string
+export interface IBaseData {
+  id: number;
+  language: string;
+  languageUrl: string;
 }

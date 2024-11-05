@@ -4,7 +4,7 @@ import { IAzkarOffset } from "./interface/IAzkarOffset";
 import { IMatchedAzkar } from "./interface/IMatchedAzkar";
 import { azkarOffset } from "./AzkarOffsetData";
 export class MatchAzkarDB {
-  titlesMap1 = [15,16, 28, 50, 59, 88, 95, 96, 105, 118, 124];
+  titlesMap1 = [15, 16, 28, 50, 59, 88, 95, 96, 105, 118, 124];
   azkar: IAzkarOffset[] = azkarOffset;
   matchAzkarBase(arabicAzkar: IAzkarBaseData[]) {
     let matches: IMatchedAzkar[] = [];
@@ -52,7 +52,7 @@ export class MatchAzkarDB {
           let founded = foundAzkar.zekr.find((e) => e.zekrApi == index);
           if (founded) {
             for (let i = 0; i < founded.zekrDB; i++) {
-              let zz=zekr.azkarDetails[skip]
+              let zz = zekr.azkarDetails[skip];
               //console.log(zz)
               matches.push({
                 order: zz.id,
@@ -62,10 +62,10 @@ export class MatchAzkarDB {
             }
           } else {
             //console.log(zekr.name)
-            console.log("1 "+zekr.name+" "+value.id+" "+index+" ")
-            let zz=zekr.azkarDetails[skip]
+            console.log("1 " + zekr.name + " " + value.id + " " + index + " ");
+            let zz = zekr.azkarDetails[skip];
             matches.push({
-                order: zz.id,
+              order: zz.id,
               audio: value.audio,
             });
             skip++;
@@ -73,8 +73,8 @@ export class MatchAzkarDB {
         });
       } else {
         zekrArabic.azkar.forEach((value, index) => {
-          let zz=zekr.azkarDetails[index ]
-          console.log(zz)
+          let zz = zekr.azkarDetails[index];
+          console.log(zz);
           matches.push({
             order: zz.id,
             audio: value.audio,
@@ -90,7 +90,7 @@ export class MatchAzkarDB {
           (zekr.id == 30 && value.id > 92 && value.id < 97)
         ) {
         } else {
-          let zz=zekr.azkarDetails[skip]
+          let zz = zekr.azkarDetails[skip];
           skip++;
           matches.push({
             order: zz.id,
@@ -105,15 +105,18 @@ export class MatchAzkarDB {
     let matches: IMatchedAzkar[] = [];
     arabicAzkar.forEach((zekrArabic) => {
       if (zekrArabic.id < 27) {
-        
-        let zekrDB = azkarDB.find((e) => e.order == zekrArabic.id + 2) as IAzkarDB;
+        let zekrDB = azkarDB.find(
+          (e) => e.order == zekrArabic.id + 2
+        ) as IAzkarDB;
         //console.log(zekrDB)
         matches = [
           ...matches,
           ...this.matchingAzkarContents(zekrArabic, zekrDB),
         ];
       } else if (zekrArabic.id == 27) {
-        let zekrDB = azkarDB.find((e) => e.order == zekrArabic.id + 2) as IAzkarDB;
+        let zekrDB = azkarDB.find(
+          (e) => e.order == zekrArabic.id + 2
+        ) as IAzkarDB;
         let zekrDB2 = azkarDB.find(
           (e) => e.order == zekrArabic.id + 3
         ) as IAzkarDB;
@@ -123,15 +126,17 @@ export class MatchAzkarDB {
           ...this.matchingAzkarContents(zekrArabic, zekrDB2),
         ];
       } else {
-        let zekrDB = azkarDB.find((e) => e.order == zekrArabic.id + 3) as IAzkarDB;
+        let zekrDB = azkarDB.find(
+          (e) => e.order == zekrArabic.id + 3
+        ) as IAzkarDB;
         //console.log(zekrDB)
-        
+
         matches = [
           ...matches,
           ...this.matchingAzkarContents(zekrArabic, zekrDB),
         ];
       }
     });
-    return matches
+    return matches;
   }
 }

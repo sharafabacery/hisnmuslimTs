@@ -148,10 +148,10 @@ WHERE id = ? `,
 };
 
 // Get Azkar from API and put them in json file
-main()
+main();
 // Get Azkar from dbs and merage them and put them in json file
-dbconn()
+dbconn();
 // Get headers of Azkar and update database audio by api
-updateMatchedAudioTitle()
+updateMatchedAudioTitle();
 // Get Content of Azkar in api and update database audio
 updateMatchedAudioContent();
