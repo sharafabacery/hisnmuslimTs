@@ -10,4 +10,5 @@ export interface IAzkarDetails {
   hadith?: string;
   benefit?: string;
   contentOrder: number;
+  audio?:string
 }

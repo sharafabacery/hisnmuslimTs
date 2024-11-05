@@ -15,6 +15,7 @@ export class AzkarDB {
           name: obj["name"],
           search: obj["search"],
           order: obj["order"],
+          audio:obj['audio'],
           azkarDetails: objs.map((e: any) => {
             let obje: IAzkarDetails = {
               id: e["contentId"],
@@ -25,6 +26,7 @@ export class AzkarDB {
               fadl: e["fadl"],
               search: e["contentSearch"],
               contentOrder: e["contentOrder"],
+              audio:e['contentAudio']
             };
             return obje;
           }),
