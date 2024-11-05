@@ -5,5 +5,6 @@ export interface IAzkarDB{
     name:string
     search:string
     audio?:string
+    order:number
     azkarDetails:IAzkarDetails[]
 }

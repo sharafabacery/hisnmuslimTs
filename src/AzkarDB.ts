@@ -14,6 +14,7 @@ export class AzkarDB{
                     id: obj['titleId'],
                     name: obj['name'],
                     search: obj['search'],
+                    order:obj['order'],
                     azkarDetails: objs.map((e: any)=>{
                         let obje:IAzkarDetails={
                             id: e['contentId'],
@@ -22,10 +23,13 @@ export class AzkarDB{
                             hokm: e['hokm'],
                             count: e['count'],
                             fadl:e['fadl'],
-                            search:e['contentSearch']
+                            search:e['contentSearch'],
+                            contentOrder:e['contentOrder']
                         }
                         return obje})
+                    
                 }
+                azkarDB.azkarDetails.sort((a,b)=>a.contentOrder - b.contentOrder)
                 returnAzkarDB.push(azkarDB)
             }
         })
@@ -40,6 +44,7 @@ export class AzkarDB{
                 name:title["name"],
                 search:title["search"],
                 audio:title["audio"],
+                order:title['order'],
                 azkarDetails: []
             })
         })

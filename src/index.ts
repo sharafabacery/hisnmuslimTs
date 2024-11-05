@@ -43,7 +43,7 @@ const azkarMainBase=async(res:IBaseData[])=>{
 const azkarDBORM=()=>{
     let obj=new Connectdb("db\\hisn_elmoslem.db")
     obj.Connect()
-    let queryAzkarDB=obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
+    let queryAzkarDB=obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,t.[order],c.[order] as contentOrder,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
                                         FROM titles t
                                         INNER JOIN contents c
                                         ON t.id=c.titleId

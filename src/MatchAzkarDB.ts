@@ -52,27 +52,26 @@ export class MatchAzkarDB {
           let founded = foundAzkar.zekr.find((e) => e.zekrApi == index);
           if (founded) {
             for (let i = 0; i < founded.zekrDB; i++) {
-              console.log("1 "+""+zekr.name+" "+value.id+" "+index+" ")
-              let zz=zekr.azkarDetails[index + i+skip ]
+              let zz=zekr.azkarDetails[skip]
               //console.log(zz)
               matches.push({
                 order: zz.id,
                 audio: value.audio,
               });
+              skip++;
             }
-            skip = founded.zekrDB;
           } else {
             //console.log(zekr.name)
             console.log("1 "+zekr.name+" "+value.id+" "+index+" ")
-            let zz=zekr.azkarDetails[index +skip]
+            let zz=zekr.azkarDetails[skip]
             matches.push({
                 order: zz.id,
               audio: value.audio,
             });
+            skip++;
           }
         });
       } else {
-        console.log(zekr.name)
         zekrArabic.azkar.forEach((value, index) => {
           let zz=zekr.azkarDetails[index ]
           console.log(zz)
@@ -84,17 +83,15 @@ export class MatchAzkarDB {
       }
     } else {
       //console.log("4444444444444")
-      let skip = 0;
+      let skip = 1;
       zekrArabic.azkar.forEach((value, index) => {
         if (
           (zekr.id == 29 && value.id == 97) ||
           (zekr.id == 30 && value.id > 92 && value.id < 97)
         ) {
-          skip--;
         } else {
-          console.log(zekr.name +" "+index+ " "+skip+" "+value.id)
-          let zz=zekr.azkarDetails[index+skip]
-          
+          let zz=zekr.azkarDetails[skip]
+          skip++;
           matches.push({
             order: zz.id,
             audio: value.audio,
@@ -109,16 +106,16 @@ export class MatchAzkarDB {
     arabicAzkar.forEach((zekrArabic) => {
       if (zekrArabic.id < 27) {
         
-        let zekrDB = azkarDB.find((e) => e.id == zekrArabic.id + 2) as IAzkarDB;
+        let zekrDB = azkarDB.find((e) => e.order == zekrArabic.id + 2) as IAzkarDB;
         //console.log(zekrDB)
         matches = [
           ...matches,
           ...this.matchingAzkarContents(zekrArabic, zekrDB),
         ];
       } else if (zekrArabic.id == 27) {
-        let zekrDB = azkarDB.find((e) => e.id == zekrArabic.id + 2) as IAzkarDB;
+        let zekrDB = azkarDB.find((e) => e.order == zekrArabic.id + 2) as IAzkarDB;
         let zekrDB2 = azkarDB.find(
-          (e) => e.id == zekrArabic.id + 3
+          (e) => e.order == zekrArabic.id + 3
         ) as IAzkarDB;
         matches = [
           ...matches,
@@ -126,7 +123,7 @@ export class MatchAzkarDB {
           ...this.matchingAzkarContents(zekrArabic, zekrDB2),
         ];
       } else {
-        let zekrDB = azkarDB.find((e) => e.id == zekrArabic.id + 3) as IAzkarDB;
+        let zekrDB = azkarDB.find((e) => e.order == zekrArabic.id + 3) as IAzkarDB;
         //console.log(zekrDB)
         
         matches = [

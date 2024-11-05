@@ -9,4 +9,5 @@ export interface IAzkarDetails{
     sharh?:string
     hadith?:string
     benefit?:string
+    contentOrder:number
 }
