@@ -74,10 +74,11 @@ export class MatchAzkarDB {
       } else {
         zekrArabic.azkar.forEach((value, index) => {
           let zz = zekr.azkarDetails[index];
+
           console.log(zz);
           matches.push({
             order: zz.id,
-            audio: value.audio,
+            audio:zz.id==196?"http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_053.mp3": value.audio,
           });
         });
       }

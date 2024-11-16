@@ -53,7 +53,7 @@ const azkarMainBase = async (res: IBaseData[]) => {
   return languages;
 };
 const azkarDBORM = () => {
-  let obj = new Connectdb("db\\hisn_elmoslem.db");
+  let obj = new Connectdb("db/hisn_elmoslem.db");
   obj.Connect();
   let queryAzkarDB =
     obj.RetriveData(`SELECT t.id as titleId,t.name,t.search,c.id as contentId,t.audio,c.audio as contentAudio,t.[order],c.[order] as contentOrder,c.content,c.fadl,c.source,c.hokm,c.search as contentSearch,c.count
@@ -67,8 +67,7 @@ const azkarDBORM = () => {
 };
 const dbconn = async () => {
   let resultAzkarDB = azkarDBORM();
-
-  let obj2 = new Connectdb("db\\commentary.db");
+  let obj2 = new Connectdb("db/commentary.db");
   obj2.Connect();
   let queryCommentary = obj2.RetriveData(`SELECT *
                                             FROM commentary
@@ -128,8 +127,8 @@ WHERE [order] = ? `,
   //console.log(res)
 };
 const updateMatchedAudioContent = async () => {
-  let resultAzkarDB = azkarDBORM();
   let api = await getArabicAzkarApi();
+  let resultAzkarDB = azkarDBORM();
   let allAzkar = await azkar(api);
   let matches = new MatchAzkarDB().matchAzkarContents(
     allAzkar["العربية"],
@@ -148,13 +147,13 @@ WHERE id = ? `,
 };
 
 // Get Azkar from API and put them in json file
-main();
+//main();
 
 // Get Azkar from dbs and merage them and put them in json file
-dbconn();
+//dbconn();
 
 // Get headers of Azkar and update database audio by api
-updateMatchedAudioTitle();
+//updateMatchedAudioTitle();
 
 // Get Content of Azkar in api and update database audio
 updateMatchedAudioContent();
